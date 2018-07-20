@@ -127,9 +127,8 @@ class YiAPICommand():
 
 		if callable(self.resultCB):
 			return self.resultCB(self.resultDict)
-		if 'msg_id' in self.cmdSend: #settingOptions
-			print('cmdsend',self.cmdSend)
-			if self.cmdSend['msg_id'] == 9:
+		if 'msg_id' in self.cmdSend: 
+			if self.cmdSend['msg_id'] == 9: #settingOptions
 				return self.resultDict
 		if 'param' in self.resultDict:
 			return self.resultDict['param']
