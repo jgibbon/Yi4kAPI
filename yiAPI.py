@@ -22,6 +22,7 @@ class YiAPI():
 	sock= None
 	tick= 0
 	sessionId= 0
+	rtsp= None
 
 	commandTimeout= 10
 	connectionTimeout= .5
@@ -99,6 +100,10 @@ class YiAPI():
 
 		runCmd.blockingEvent.wait()
 		timeoutCmd.cancel()
+
+		if 'rtsp' in runCmd.resultDict:
+			self.rtsp = runCmd.resultDict['rtsp']
+			
 
 		logging.debug('Result %s' % runCmd.resultDict)
 
