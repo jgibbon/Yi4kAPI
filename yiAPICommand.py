@@ -74,12 +74,20 @@ class YiAPICommandGen():
 		if not isinstance(_val, list) and not isinstance(_val, tuple):
 			_val= [_val]
 
-		for pair in zip(self.variable,_val):
-			if pair[0] in _cmdPrep and isinstance(_cmdPrep[pair[0]], str):
-				if isinstance(pair[1], str):
-					_cmdPrep[pair[0]]+= pair[1]
-			else:
-				_cmdPrep[pair[0]]= pair[1]
+		if self.variable == [] and _val != [None]: #raw
+			for key in _val[0]:
+				_cmdPrep[key] = _val[0][key]
+		else: 
+			for pair in zip(self.variable,_val):
+				if pair[0] in _cmdPrep and isinstance(_cmdPrep[pair[0]], str):
+					if isinstance(pair[1], str):
+						_cmdPrep[pair[0]]+= pair[1]
+				else:
+					_cmdPrep[pair[0]]= pair[1]
+
+
+
+		print('_cmdPrep 2', _cmdPrep)
 		return YiAPICommand(_cmdPrep, self.resultReq, self.resultCB)
 
 
@@ -117,6 +125,7 @@ class YiAPICommand():
 
 
 	def result(self):
+#		print('commandSend', self.cmdSend)
 		if not 'rval' in self.resultDict:
 			logging.error('Camera timeout')
 			return -99998
@@ -127,8 +136,9 @@ class YiAPICommand():
 
 		if callable(self.resultCB):
 			return self.resultCB(self.resultDict)
-		if 'msg_id' in self.cmdSend: 
-			if self.cmdSend['msg_id'] == 9: #settingOptions
+		if 'msg_id' in self.cmdSend: #settingOptions
+			print('cmdsend',self.cmdSend)
+			if self.cmdSend['msg_id'] == 9:
 				return self.resultDict
 		if 'param' in self.resultDict:
 			return self.resultDict['param']

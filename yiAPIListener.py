@@ -48,21 +48,19 @@ class YiAPIListener(threading.Thread):
 		while True:
 			logging.info('Wait...')
 			try:
-				recv= self.sock.recv(1024)
+				recv= self.sock.recv(2048)
 			except:
 				logging.info("...stopped")
 				return
 
 			logging.debug("Part %db" % len(recv))
 			jsonA= self.jsonStream.find(recv.decode())
-
 			for resJSON in jsonA:
 				logging.info('Res %s' % str(resJSON))
 				if not 'msg_id' in resJSON:
 					logging.warning('Insufficient response, no msg_id')
 
 					continue
-
 
 				self.commandsCB= self.applyCB(self.commandsCB, resJSON)
 
