@@ -42,6 +42,12 @@ capturePhoto=		YiAPICommandGen(16777220, 'capturePhoto',
 	params= {'param':'precise quality;off'},
 	resultReq= {'msg_id': 7, 'type': 'photo_taken'}
 )
+capturePhotoSimple=		YiAPICommandGen(769, 'capturePhotoSimple',
+	resultReq= {'msg_id': 7, 'type': 'photo_taken'}
+)
+stopTimelapsePhoto=		YiAPICommandGen(770, 'stopTimelapsePhoto',
+	resultReq= {'msg_id': 7, 'type': 'video_timelapse_complete'}
+)
 
 getFileList=		YiAPICommandGen(1282, 'getFileList',
 	params= {'param':'/tmp/fuse_d/DCIM/'},
